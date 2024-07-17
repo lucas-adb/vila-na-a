@@ -20,6 +20,22 @@ app.get("/poll", async (_req, res) => {
   res.json(result);
 });
 
+app.post("/poll", async (req, res) => {
+  const validVotes = ["yes", "no"];
+  const vote = req.body.vote;
+
+  if (!validVotes.includes(vote)) {
+    return res.status(400).json({ message: "invalid vote value" });
+  }
+
+  const data = JSON.parse(await fs.readFile(dataFile, "utf8"));
+  data[vote] = data[vote] + 1;
+
+  await fs.writeFile(dataFile, JSON.stringify(data, null, 2));
+
+  res.status(201).json({ message: "new vote added" });
+});
+
 app.listen(port, () => {
   console.log(`server is running on ${port} 🎉`);
 });
