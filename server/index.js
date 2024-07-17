@@ -6,18 +6,32 @@ const app = express();
 const port = 3000;
 const dataFile = path.join(__dirname, "data.json");
 
+/**
+ * @typedef {Object} Percentage
+ * @property {string} label - vote label, "yes" or "no"
+ * @property {string} percentage - percentage of votes
+ *
+ * @typedef {Object} Response
+ * @property {number} total - total number of votes
+ * @property {Percentage[]} percentages - array of percentage objects
+ */
+
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/poll", async (_req, res) => {
   const data = JSON.parse(await fs.readFile(dataFile, "utf8"));
   const totalVotes = Object.values(data).reduce((acc, item) => acc + item, 0);
 
-  const result = Object.entries(data).map(([key, value]) => ({
+  /** @type {Percentage[]} */
+  const percentages = Object.entries(data).map(([key, value]) => ({
     label: key,
     percentage: ((value / totalVotes) * 100 || 0).toFixed(1),
   }));
 
-  res.json(result);
+  /** @type {Response} */
+  const response = { total: totalVotes, percentages: percentages };
+
+  res.json(response);
 });
 
 app.post("/poll", async (req, res) => {
