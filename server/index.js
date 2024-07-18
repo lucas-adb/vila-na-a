@@ -18,6 +18,12 @@ const dataFile = path.join(__dirname, "data.json");
 
 app.use(express.urlencoded({ extended: true }));
 
+// Enable Cors
+app.use((_req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 app.get("/poll", async (_req, res) => {
   const data = JSON.parse(await fs.readFile(dataFile, "utf8"));
   const totalVotes = Object.values(data).reduce((acc, item) => acc + item, 0);
