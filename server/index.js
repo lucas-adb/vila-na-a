@@ -33,7 +33,6 @@ app.get("/poll", async (_req, res) => {
 
   res.json(response);
 });
-
 app.post("/poll", async (req, res) => {
   const validVotes = ["yes", "no"];
   const vote = req.body.vote;
