@@ -23,65 +23,64 @@ class Poll {
   }
 
   async _refresh() {
-    const response = await fetch(this.endpoint.trim());
-    const { total, percentages } = await response.json();
+    const response = await fetch(this.endpoint);
+    const rows = await response.json();
 
-    this.root
-      .querySelectorAll(".poll__option")
-      .forEach((option) => option.remove());
+    if (rows.length > 0) {
+      const { total, yes_percentage, no_percentage } = rows[0];
 
-    percentages.forEach((option, index) => {
-      const optionHTML = `
-        <div class="poll__option ${
-          this.selected === option.label ? "poll__option--selected" : ""
-        }" id="poll__option-${index}">
-          <div class="poll__option-info">
-            <span class="poll__label">${
-              option.label === "yes" ? "Sim" : "Não"
-            }</span>
-            <span class="poll__percentage">${option.percentage}%</span>
+      this.root.querySelectorAll(".poll__option").forEach((option) => option.remove());
+
+      const options = [
+        { label: "yes", percentage: yes_percentage },
+        { label: "no", percentage: no_percentage }
+      ];
+
+      options.forEach((option, index) => {
+        const optionHTML = `
+          <div class="poll__option ${this.selected === option.label ? "poll__option--selected" : ""}" id="poll__option-${index}">
+            <div class="poll__option-info">
+              <span class="poll__label">${option.label === "yes" ? "Sim" : "Não"}</span>
+              <span class="poll__percentage">${option.percentage}%</span>
+            </div>
+            <div class="poll__option-fill"></div>
           </div>
-          <div class="poll__option-fill"></div>
-        </div>
-      `;
+        `;
 
-      this.root.insertAdjacentHTML("beforeend", optionHTML);
+        this.root.insertAdjacentHTML("beforeend", optionHTML);
 
-      if (!this.selected) {
-        this.root.lastElementChild.addEventListener("click", () => {
-          fetch(this.endpoint, {
-            method: "POST",
-            body: `vote=${option.label}`,
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }).then(() => {
-            this.selected = option.label;
-            localStorage.setItem("vila-poll-vote", option.label);
-            this._refresh();
+        if (!this.selected) {
+          this.root.lastElementChild.addEventListener("click", () => {
+            fetch(this.endpoint, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ vote: option.label }),
+            }).then(() => {
+              this.selected = option.label;
+              localStorage.setItem("vila-poll-vote", option.label);
+              this._refresh();
+            });
           });
-        });
-      }
-    });
-
-    percentages.forEach((option, index) => {
-      setTimeout(() => {
-        const optionFill = document.querySelector(
-          `[id="poll__option-${index}"] .poll__option-fill`
-        );
-
-        optionFill.style.width = `${option.percentage}%`;
-
-        if (this.selected) {
-          optionFill.style.visibility = "visible";
         }
-      }, 0);
-    });
+      });
 
-    const totalVotesP = document.createElement("p");
-    totalVotesP.classList.add("poll__total-votes");
-    totalVotesP.textContent = `${total} votos`;
-    this.root.appendChild(totalVotesP);
+      options.forEach((option, index) => {
+        setTimeout(() => {
+          const optionFill = document.querySelector(`[id="poll__option-${index}"] .poll__option-fill`);
+          optionFill.style.width = `${option.percentage}%`;
+          if (this.selected) {
+            optionFill.style.visibility = "visible";
+          }
+        }, 0);
+      });
+
+      const totalVotesP = document.createElement("p");
+      totalVotesP.classList.add("poll__total-votes");
+      totalVotesP.textContent = `${total} votos`;
+      this.root.appendChild(totalVotesP);
+    }
   }
 }
 

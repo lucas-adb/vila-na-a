@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
@@ -21,13 +22,11 @@ db.serialize(() => {
   )`);
 });
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Enable Cors
-app.use((_req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors());
 
 app.get("/poll", async (_req, res) => {
   const sql = `
