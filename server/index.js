@@ -48,7 +48,15 @@ app.get("/poll", async (_req, res) => {
 });
 
 app.post("/poll", async (req, res) => {
-  const vote = req.body.vote === 'yes'; // Convertendo string para booleano
+  if (!req.body.vote) {
+    return res.status(400).json({ message: "vote is required" });
+  }
+
+  if (req.body.vote !== "yes" && req.body.vote !== "no") {
+    return res.status(400).json({ message: "Vote must be 'yes' or 'no'" });
+  }
+
+  const vote = req.body.vote === "yes";
 
   const sql = `INSERT INTO votes (vote) VALUES (?)`;
 
