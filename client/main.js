@@ -12,8 +12,7 @@ class Poll {
   constructor(root, title) {
     this.root = root;
     this.selected = localStorage.getItem("vila-poll-vote");
-    // this.endpoint = "http://localhost:3000/poll";
-    this.endpoint = "https://vila-na-a-server.onrender.com/poll";
+    this.endpoint = "https://vila-na-a-server.onrender.com/poll"; // http://localhost:3000/poll
 
     this.root.insertAdjacentHTML(
       "afterbegin",
@@ -31,6 +30,9 @@ class Poll {
       const { total, yes_percentage, no_percentage } = rows[0];
 
       this.root.querySelectorAll(".poll__option").forEach((option) => option.remove());
+
+      const totalVotesElement = this.root.querySelector(".poll__total-votes");
+      if (totalVotesElement) totalVotesElement.remove();
 
       const options = [
         { label: "yes", percentage: yes_percentage },
@@ -66,7 +68,6 @@ class Poll {
           });
 
           const percentages = document.querySelectorAll(".poll__percentage");
-          // percentages[0].style.visibility = "hidden";
           percentages.forEach((percentage) => percentage.style.visibility = "hidden");
         }
       });
