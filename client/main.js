@@ -63,6 +63,10 @@ class Poll {
               this._refresh();
             });
           });
+
+          const percentages = document.querySelectorAll(".poll__percentage");
+          // percentages[0].style.visibility = "hidden";
+          percentages.forEach((percentage) => percentage.style.visibility = "hidden");
         }
       });
 
