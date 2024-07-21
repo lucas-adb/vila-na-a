@@ -182,3 +182,34 @@ h6 {
   color: var(--text);
   visibility: visible;
 }
+
+@media (max-width: 768px) {
+  .year {
+    font-size: 3rem;
+  }
+
+  .tiger-img {
+    max-width: 200px;
+  }
+
+  .description {
+    font-size: 1.125rem;
+  }
+
+  .poll {
+    padding: 2rem 1rem;
+  }
+
+  .poll__title {
+    font-size: 1.25rem;
+  }
+
+  .poll__option-info {
+    font-size: 1.25rem;
+    padding: 1rem;
+  }
+
+  .portfolio {
+    font-size: 1.25rem;
+  }
+}
