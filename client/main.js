@@ -13,7 +13,7 @@ class Poll {
     this.root = root;
     this.selected = localStorage.getItem("vila-poll-vote");
     // this.endpoint = "http://localhost:3000/poll";
-    this.endpoint = "https://vila-na-a-server.onrender.com";
+    this.endpoint = "https://vila-na-a-server.onrender.com/poll";
 
     this.root.insertAdjacentHTML(
       "afterbegin",
