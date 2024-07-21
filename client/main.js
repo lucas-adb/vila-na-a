@@ -1,3 +1,13 @@
+class Year {
+  constructor(root) {
+    this.root = root;
+    this.lastAYear = 1985;
+    this.currentYear = new Date().getFullYear();
+
+    this.root.innerHTML = `${this.currentYear - this.lastAYear} ANOS`;
+  }
+}
+
 class Poll {
   constructor(root, title) {
     this.root = root;
@@ -65,3 +75,4 @@ class Poll {
 }
 
 const p = new Poll(document.querySelector(".poll"), "Esse ano sobe?");
+const y = new Year(document.querySelector(".year"));

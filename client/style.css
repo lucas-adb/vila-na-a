@@ -1,3 +1,51 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+
+  font-family: 'Inter', sans-serif;
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+:root {
+  --primary: #EF233C;
+  --secondary: #FFFFFF;
+  --text: #484848;
+
+}
+
 .poll {
   width: 400px;
   padding: 1.5rem;
@@ -5,6 +53,9 @@
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
+
+  background-color: var(--secondary);
+  color: var(--text);
 }
 
 .poll__title {
@@ -40,4 +91,25 @@
   justify-content: space-between;
   padding-block: 0.5rem;
   font-size: 0.85rem;
+}
+
+.tiger-img {
+  max-width: 400px;
+}
+
+.year {
+  font-size: 6rem;
+  color: var(--secondary);
+  font-weight: 900;
+}
+
+.description {
+  font-size: 1.5rem;
+  color: var(--secondary);
+}
+
+.portfolio {
+  color: var(--secondary);
+  font-weight: 700;
+  text-decoration: none;
 }
