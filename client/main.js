@@ -41,7 +41,7 @@ class Poll {
             }</span>
             <span class="poll__percentage">${option.percentage}%</span>
           </div>
-          <div class="poll__option-fill" style="width: 0;"></div>
+          <div class="poll__option-fill"></div>
         </div>
       `;
 
@@ -66,9 +66,15 @@ class Poll {
 
     percentages.forEach((option, index) => {
       setTimeout(() => {
-        document.querySelector(
+        const optionFill = document.querySelector(
           `[id="poll__option-${index}"] .poll__option-fill`
-        ).style.width = `${option.percentage}%`;
+        );
+
+        optionFill.style.width = `${option.percentage}%`;
+
+        if (this.selected) {
+          optionFill.style.visibility = "visible";
+        }
       }, 0);
     });
 
