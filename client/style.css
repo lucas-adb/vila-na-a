@@ -47,9 +47,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .poll {
-  /* width: 400px; */
-  padding: 1.5rem;
-  /* margin: 50px; */
+  padding: 2rem;
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -61,9 +59,10 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .poll__title {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .poll__option {

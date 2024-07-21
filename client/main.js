@@ -68,7 +68,8 @@ class Poll {
 
       fragment.querySelector(
         ".poll__option-fill"
-      ).style.width = `${option.value}%`;
+      ).style.width = `${option.percentage}%`;
+
       this.root.appendChild(fragment);
     }
   }
