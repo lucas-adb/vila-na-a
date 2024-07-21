@@ -1,58 +1,70 @@
 const express = require("express");
-const fs = require("fs").promises;
+const cors = require("cors");
+const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
 const app = express();
 const port = 3000;
-const dataFile = path.join(__dirname, "data.json");
+const dbPath = path.join(__dirname, "poll.db");
 
-/**
- * @typedef {Object} Percentage
- * @property {string} label - vote label, "yes" or "no"
- * @property {string} percentage - percentage of votes
- *
- * @typedef {Object} Response
- * @property {number} total - total number of votes
- * @property {Percentage[]} percentages - array of percentage objects
- */
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the "poll.db" database.');
+});
 
-app.use(express.urlencoded({ extended: true }));
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS votes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    vote BOOLEAN NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+});
+
+// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Enable Cors
-app.use((_req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors());
 
 app.get("/poll", async (_req, res) => {
-  const data = JSON.parse(await fs.readFile(dataFile, "utf8"));
-  const totalVotes = Object.values(data).reduce((acc, item) => acc + item, 0);
+  const sql = `
+  SELECT 
+    COUNT(vote) AS total,
+    ROUND(SUM(CASE WHEN vote = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(vote), 1) AS yes_percentage,
+    ROUND(SUM(CASE WHEN vote = 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(vote), 1) AS no_percentage
+  FROM votes
+`;
 
-  /** @type {Percentage[]} */
-  const percentages = Object.entries(data).map(([key, value]) => ({
-    label: key,
-    percentage: ((value / totalVotes) * 100 || 0).toFixed(1),
-  }));
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
 
-  /** @type {Response} */
-  const response = { total: totalVotes, percentages: percentages };
-
-  res.json(response);
+    res.json(rows);
+  });
 });
-app.post("/poll", async (req, res) => {
-  const validVotes = ["yes", "no"];
-  const vote = req.body.vote;
 
-  if (!validVotes.includes(vote)) {
-    return res.status(400).json({ message: "invalid vote value" });
+app.post("/poll", async (req, res) => {
+  if (!req.body.vote) {
+    return res.status(400).json({ message: "vote is required" });
   }
 
-  const data = JSON.parse(await fs.readFile(dataFile, "utf8"));
-  data[vote] = data[vote] + 1;
+  if (req.body.vote !== "yes" && req.body.vote !== "no") {
+    return res.status(400).json({ message: "Vote must be 'yes' or 'no'" });
+  }
 
-  await fs.writeFile(dataFile, JSON.stringify(data, null, 2));
+  const vote = req.body.vote === "yes";
 
-  res.status(201).json({ message: "new vote added" });
+  const sql = `INSERT INTO votes (vote) VALUES (?)`;
+
+  db.run(sql, [vote], (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.status(201).json({ message: "new vote added" });
+  });
 });
 
 app.listen(port, () => {
