@@ -1,16 +1,99 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+
+  font-family: "Inter", sans-serif;
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 4rem 2rem;
+
+  background-image: url("../client/assets/back.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+:root {
+  --primary: #ef233c;
+  --secondary: #ffffff;
+  --text: #484848;
+  --border: #b0b0b0;
+}
+
 .poll {
-  width: 400px;
-  padding: 1.5rem;
-  margin: 50px;
+  padding: 2rem;
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
+  border-radius: 32px;
+
+  background-color: var(--secondary);
+  color: var(--text);
+  width: 100%;
+  max-width: 700px;
+  margin-block: 2rem;
 }
 
 .poll__title {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.poll__option {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+
+  position: relative;
 }
 
 .poll__option:hover {
@@ -22,22 +105,79 @@
 }
 
 .poll__option--selected .poll__option-fill {
-  background: #EF233C;
+  background: #ef233c;
 }
 
 .poll__option--selected .poll__option-info {
   font-weight: bold;
-} 
+}
 
 .poll__option-fill {
-  width: 50%;
-  height: 10px;
+  width: 0;
+  height: 70px;
   background: #dddddd;
+  transition: width 2s ease;
+  visibility: hidden;
+  /* visibility: visible; */
 }
 
 .poll__option-info {
   display: flex;
   justify-content: space-between;
-  padding-block: 0.5rem;
-  font-size: 0.85rem;
+  align-items: center;
+  padding: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
+
+@keyframes movingTiger {
+  0%,
+  30% {
+    transform: perspective(500px) rotateX(0deg) scale(1) translateY(0);
+  }
+  15% {
+    transform: perspective(500px) rotateX(5deg) scale(1.05) translateY(-10px);
+  }
+  30%,
+  100% {
+    transform: perspective(500px) rotateX(0deg) scale(1) translateY(0);
+  }
+}
+
+.tiger-img {
+  max-width: 400px;
+  animation: movingTiger 10s infinite;
+}
+
+.year {
+  font-size: 6rem;
+  color: var(--secondary);
+  font-weight: 900;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  text-align: center;
+}
+
+.portfolio {
+  color: var(--secondary);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.poll__total-votes {
+  color: var(--text);
+  text-align: center;
+}
+
+/* .show {
+  visibility: visible;
+} */
