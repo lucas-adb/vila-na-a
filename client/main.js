@@ -26,7 +26,7 @@ class Poll {
 
   async _refresh() {
     const response = await fetch(this.endpoint);
-    const { percentages } = await response.json();
+    const { total, percentages } = await response.json();
 
     this.root
       .querySelectorAll(".poll__option")
@@ -72,6 +72,11 @@ class Poll {
 
       this.root.appendChild(fragment);
     }
+
+    const totalVotesP = document.createElement("p");
+    totalVotesP.classList.add("poll__total-votes");
+    totalVotesP.innerHTML = `${total} votos`;
+    this.root.appendChild(totalVotesP);
   }
 }
 
