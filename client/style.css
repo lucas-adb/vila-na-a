@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -6,7 +8,8 @@
   margin: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -14,7 +17,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--primary);
   display: flex;
   align-items: center;
@@ -22,28 +25,42 @@ body {
   padding: 4rem 2rem;
 }
 
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
 
 :root {
-  --primary: #EF233C;
-  --secondary: #FFFFFF;
+  --primary: #ef233c;
+  --secondary: #ffffff;
   --text: #484848;
-  --border: #B0B0B0;
+  --border: #b0b0b0;
 }
 
 .poll {
@@ -83,12 +100,12 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .poll__option--selected .poll__option-fill {
-  background: #EF233C;
+  background: #ef233c;
 }
 
 .poll__option--selected .poll__option-info {
   font-weight: bold;
-} 
+}
 
 .poll__option-fill {
   width: 0;
@@ -112,8 +129,23 @@ p, h1, h2, h3, h4, h5, h6 {
   height: 100%;
 }
 
+@keyframes movingTiger {
+  0%,
+  30% {
+    transform: perspective(500px) rotateX(0deg) scale(1) translateY(0);
+  }
+  15% {
+    transform: perspective(500px) rotateX(5deg) scale(1.05) translateY(-10px);
+  }
+  30%,
+  100% {
+    transform: perspective(500px) rotateX(0deg) scale(1) translateY(0);
+  }
+}
+
 .tiger-img {
   max-width: 400px;
+  animation: movingTiger 10s infinite;
 }
 
 .year {
