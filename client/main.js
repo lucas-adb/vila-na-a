@@ -40,11 +40,11 @@ class Poll {
         <div class="poll__option ${
           this.selected === option.label ? "poll__option--selected" : ""
         }">
-          <div class="poll__option-fill"></div>
           <div class="poll__option-info">
-            <span class="poll__label">${option.label}</span>
+            <span class="poll__label">${option.label === "yes" ? "Sim" : "Não"}</span>
             <span class="poll__percentage">${option.percentage}%</span>
           </div>
+          <div class="poll__option-fill"></div>
         </div>
       `;
 

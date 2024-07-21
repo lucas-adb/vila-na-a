@@ -43,25 +43,35 @@ p, h1, h2, h3, h4, h5, h6 {
   --primary: #EF233C;
   --secondary: #FFFFFF;
   --text: #484848;
-
+  --border: #B0B0B0;
 }
 
 .poll {
-  width: 400px;
+  /* width: 400px; */
   padding: 1.5rem;
-  margin: 50px;
+  /* margin: 50px; */
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 
   background-color: var(--secondary);
   color: var(--text);
+  width: 100%;
+  max-width: 700px;
 }
 
 .poll__title {
   font-weight: bold;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.poll__option {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+
+  position: relative;
 }
 
 .poll__option:hover {
@@ -82,15 +92,21 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .poll__option-fill {
   width: 50%;
-  height: 10px;
+  height: 70px;
   background: #dddddd;
 }
 
 .poll__option-info {
   display: flex;
   justify-content: space-between;
-  padding-block: 0.5rem;
-  font-size: 0.85rem;
+  align-items: center;
+  padding: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .tiger-img {
