@@ -10,6 +10,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  color: var(--text);
 }
 
 #app {
@@ -17,6 +18,7 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 4rem 2rem;
+  gap: 2rem;
 }
 
 :root {
@@ -27,7 +29,7 @@ body {
 }
 
 .poll {
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   border-radius: 32px;
@@ -36,13 +38,17 @@ body {
   color: var(--text);
   width: 100%;
   max-width: 700px;
-  margin-block: 2rem;
+  /* margin-block: 2rem; */
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .poll__title {
   font-weight: 700;
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   text-align: center;
 }
 
@@ -116,12 +122,15 @@ body {
   color: var(--secondary);
   font-weight: 900;
   text-align: center;
+
+  margin-block: 0;
 }
 
 .description {
   font-size: 1.5rem;
   color: var(--secondary);
   text-align: center;
+  margin-block: 0;
 }
 
 .portfolio {
@@ -134,6 +143,7 @@ body {
 .poll__total-votes {
   color: var(--text);
   text-align: center;
+  margin-block: 0;
 }
 
 .poll__percentage {
@@ -170,4 +180,22 @@ body {
   .portfolio {
     font-size: 1.25rem;
   }
+}
+
+.poll__voting-btn {
+  width: 100%;
+  text-align: left;
+
+  padding: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.poll__voting-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
