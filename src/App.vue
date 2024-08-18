@@ -38,6 +38,18 @@ onMounted(() => {
     <div class="poll__title">Esse ano sobe?</div>
     <button class="poll__voting-btn" @click="() => vote(true)">Sim</button>
     <button class="poll__voting-btn" @click="() => vote(false)">Não</button>
+
+    <div class="poll__yes-result">
+      <p>Sim</p>
+      <!-- <p>80%</p> -->
+      <p>{{ (votes.total_true / votes.total_votes) * 100 }}%</p>
+      <!-- <p>{{ votes.total_true }}</p> -->
+      <div
+        class="poll__fill"
+        :style="{ width: (votes.total_true / votes.total_votes) * 100 + '%' }"
+      ></div>
+    </div>
+
     <p class="poll__total-votes">{{ votes.total_votes }} votos</p>
   </div>
   <a href="https://lucasalves.dev/" class="portfolio" target="_blank">lucasalves.dev</a>
@@ -50,3 +62,11 @@ onMounted(() => {
 </ul>
 <button @click="() => vote(true)">Yes</button>
 <button @click="() => vote(false)">No</button> -->
+
+<!-- <div class="poll__option poll__option--selected" id="poll__option-0">
+  <div class="poll__option-info">
+    <span class="poll__label">Sim</span>
+    <span class="poll__percentage">100%</span>
+  </div>
+  <div class="poll__option-fill"></div>
+</div> -->
