@@ -40,4 +40,6 @@ onMounted(() => {
   </ul>
   <button @click="() => vote(true)">Yes</button>
   <button @click="() => vote(false)">No</button>
+
+  <a href="https://lucasalves.dev/" class="portfolio" target="_blank">lucasalves.dev</a>
 </template>
