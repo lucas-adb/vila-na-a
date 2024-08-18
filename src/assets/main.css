@@ -25,6 +25,7 @@ body {
   --primary: #ef233c;
   --secondary: #ffffff;
   --text: #484848;
+  --text-darker: #2c2c2c;
   --border: #b0b0b0;
 }
 
@@ -35,7 +36,7 @@ body {
   border-radius: 32px;
 
   background-color: var(--secondary);
-  color: var(--text);
+  color: var(--text-darker);
   width: 100%;
   max-width: 700px;
   /* margin-block: 2rem; */
