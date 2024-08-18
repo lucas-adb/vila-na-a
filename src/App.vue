@@ -2,16 +2,22 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from './lib/supabaseClient'
 
-const votes = ref([])
+const votes = ref({})
 
 async function getPoll() {
-  const { data } = await supabase.from('poll').select()
-  console.log('data', data)
-  votes.value = data
+  const { data, error } = await supabase.rpc('get_poll')
+
+  if (error) {
+    console.error('Error fetching poll:', error)
+    return
+  }
+
+  votes.value = data[0]
+  console.log('poll', data)
 }
 
 async function vote() {
-  const { data, error } = await supabase.from('poll').insert([{ vote: 'yes' }])
+  const { data, error } = await supabase.from('poll').insert([{ vote: false }])
   console.log('data', data)
   console.log('error', error)
   getPoll()
@@ -24,7 +30,9 @@ onMounted(() => {
 
 <template>
   <ul>
-    <li v-for="vote in votes" :key="vote.id">{{ vote.vote }}</li>
+    <li>Total Votes: {{ votes.total_votes }}</li>
+    <li>Total True: {{ votes.total_true }}</li>
+    <li>Total False: {{ votes.total_false }}</li>
   </ul>
   <button @click="vote">Vote</button>
 </template>
