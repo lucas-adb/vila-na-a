@@ -19,6 +19,9 @@ async function getPoll() {
 }
 
 async function vote(bool) {
+  const vote = localStorage.getItem('vila-poll')
+  if (vote) return
+
   const { data, error } = await supabase.from('poll').insert([{ vote: bool }])
 
   if (error) {
@@ -30,10 +33,14 @@ async function vote(bool) {
   getPoll()
 
   pollStore.setButtonClicked(true)
+  localStorage.setItem('vila-poll', true)
 }
 
 onMounted(() => {
-  getPoll()
+  if (localStorage.getItem('vila-poll')) {
+    getPoll()
+    pollStore.setButtonClicked(true)
+  }
 })
 </script>
 
