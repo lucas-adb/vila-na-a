@@ -39,14 +39,21 @@ onMounted(() => {
     <button class="poll__voting-btn" @click="() => vote(true)">Sim</button>
     <button class="poll__voting-btn" @click="() => vote(false)">Não</button>
 
-    <div class="poll__yes-result">
+    <div class="poll__result">
       <p>Sim</p>
-      <!-- <p>80%</p> -->
       <p>{{ (votes.total_true / votes.total_votes) * 100 }}%</p>
-      <!-- <p>{{ votes.total_true }}</p> -->
       <div
         class="poll__fill"
         :style="{ width: (votes.total_true / votes.total_votes) * 100 + '%' }"
+      ></div>
+    </div>
+
+    <div class="poll__result">
+      <p>Não</p>
+      <p>{{ (votes.total_true / votes.total_false) * 100 }}%</p>
+      <div
+        class="poll__fill"
+        :style="{ width: (votes.total_true / votes.total_false) * 100 + '%' }"
       ></div>
     </div>
 

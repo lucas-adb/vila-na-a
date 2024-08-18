@@ -223,7 +223,7 @@ body {
   width: 50%;
 } */
 
-.poll__yes-result {
+.poll__result {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
@@ -236,7 +236,7 @@ body {
   overflow: hidden; /* Adicione esta linha para garantir que o conteúdo não transborde */
 }
 
-.poll__yes-result p {
+.poll__result p {
   margin-block: 0;
   z-index: 1; /* Certifique-se de que o texto esteja acima do fundo */
 }
