@@ -16,8 +16,8 @@ async function getPoll() {
   console.log('poll', data)
 }
 
-async function vote() {
-  const { data, error } = await supabase.from('poll').insert([{ vote: false }])
+async function vote(bool) {
+  const { data, error } = await supabase.from('poll').insert([{ vote: bool }])
   console.log('data', data)
   console.log('error', error)
   getPoll()
@@ -34,5 +34,6 @@ onMounted(() => {
     <li>Total True: {{ votes.total_true }}</li>
     <li>Total False: {{ votes.total_false }}</li>
   </ul>
-  <button @click="vote">Vote</button>
+  <button @click="() => vote(true)">Yes</button>
+  <button @click="() => vote(false)">No</button>
 </template>
