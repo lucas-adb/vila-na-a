@@ -30,7 +30,6 @@ async function getPoll() {
   }
 
   votes.value = data[0]
-  console.log('poll', data)
   isLoading.value = false
 
   await nextTick()
@@ -38,17 +37,16 @@ async function getPoll() {
 }
 
 async function vote(bool) {
-  const vote = localStorage.getItem('vila-poll')
-  if (vote) return
+  const existingVote = localStorage.getItem('vila-poll')
+  if (existingVote) return
 
-  const { data, error } = await supabase.from('poll').insert([{ vote: bool }])
+  const { error } = await supabase.from('poll').insert([{ vote: bool }])
 
   if (error) {
     console.error('Error voting:', error)
     return
   }
 
-  console.log('data', data)
   getPoll()
 
   pollStore.setButtonClicked(true)
