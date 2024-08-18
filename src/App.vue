@@ -1,11 +1,25 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { supabase } from './lib/supabaseClient'
 import { usePollStore } from './stores/poll'
 
 const pollStore = usePollStore()
 const votes = ref({})
 const isLoading = ref(true)
+
+function animateFills() {
+  const fills = document.querySelectorAll('.poll__fill')
+
+  fills.forEach((fill) => {
+    fill.style.width = '0'
+    fill.offsetWidth
+  })
+
+  fills[0].style.width = `${((votes.value.total_true / votes.value.total_votes) * 100).toFixed(2)}%`
+  fills[1].style.width = `${((votes.value.total_false / votes.value.total_votes) * 100).toFixed(2)}%`
+
+  fills.forEach((fill) => fill.classList.add('animate-fill'))
+}
 
 async function getPoll() {
   const { data, error } = await supabase.rpc('get_poll')
@@ -18,6 +32,9 @@ async function getPoll() {
   votes.value = data[0]
   console.log('poll', data)
   isLoading.value = false
+
+  await nextTick()
+  animateFills()
 }
 
 async function vote(bool) {
@@ -38,7 +55,7 @@ async function vote(bool) {
   localStorage.setItem('vila-poll', true)
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (localStorage.getItem('vila-poll')) {
     getPoll()
     pollStore.setButtonClicked(true)
@@ -68,19 +85,13 @@ onMounted(() => {
       <div v-if="pollStore.isButtonClicked" class="poll__result">
         <p>Sim</p>
         <p>{{ ((votes.total_true / votes.total_votes) * 100).toFixed(2) }}%</p>
-        <div
-          class="poll__fill"
-          :style="{ width: ((votes.total_true / votes.total_votes) * 100).toFixed(2) + '%' }"
-        ></div>
+        <div class="poll__fill"></div>
       </div>
 
       <div v-if="pollStore.isButtonClicked" class="poll__result">
         <p>Não</p>
         <p>{{ ((votes.total_false / votes.total_votes) * 100).toFixed(2) }}%</p>
-        <div
-          class="poll__fill"
-          :style="{ width: ((votes.total_false / votes.total_votes) * 100).toFixed(2) + '%' }"
-        ></div>
+        <div class="poll__fill"></div>
       </div>
 
       <p v-if="pollStore.isButtonClicked" class="poll__total-votes">

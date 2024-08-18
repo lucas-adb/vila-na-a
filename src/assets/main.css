@@ -273,3 +273,11 @@ body {
   max-width: 300px;
   margin: 0 auto;
 }
+
+.poll__fill {
+  transition: width 1s ease-in-out;
+}
+
+.animate-fill {
+  transition: width 1s ease-in-out;
+}
