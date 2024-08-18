@@ -29,6 +29,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <img src="./assets/sad-tiger.png" alt="illustration of cartoon tiger crying" class="tiger-img" />
+  <h1 class="year">39 anos</h1>
+  <p class="description">se passaram desde que o Vila Nova disputou a série A.</p>
+  <div class="poll"></div>
   <ul>
     <li>Total Votes: {{ votes.total_votes }}</li>
     <li>Total True: {{ votes.total_true }}</li>
