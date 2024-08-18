@@ -262,3 +262,14 @@ body {
     padding: 0.8rem;
   }
 }
+
+/* .loading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+} */
+
+.loading {
+  max-width: 300px;
+  margin: 0 auto;
+}
