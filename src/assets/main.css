@@ -151,7 +151,13 @@ body {
   text-decoration: none;
 
   margin-top: auto;
-  /* font-size: 1.5rem; */
+
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.portfolio:hover {
+  transform: translateY(-2px) scale(1.05);
 }
 
 .poll__total-votes {
