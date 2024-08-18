@@ -28,7 +28,8 @@ async function vote(bool) {
 
   console.log('data', data)
   getPoll()
-  pollStore.setButtonClicked(true) // Atualiza o estado após votar
+
+  pollStore.setButtonClicked(true)
 }
 
 onMounted(() => {
