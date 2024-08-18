@@ -7,6 +7,9 @@ const pollStore = usePollStore()
 const votes = ref({})
 const isLoading = ref(true)
 
+const lastYearOnSeriesA = 1985
+const currentYear = new Date().getFullYear()
+
 function animateFills() {
   const fills = document.querySelectorAll('.poll__fill')
 
@@ -66,7 +69,7 @@ onMounted(async () => {
 <template>
   <img src="./assets/sad-tiger.png" alt="illustration of cartoon tiger crying" class="tiger-img" />
   <div>
-    <h1 class="year">39 anos</h1>
+    <h1 class="year">{{ currentYear - lastYearOnSeriesA }} anos</h1>
     <p class="description">se passaram desde que o Vila Nova disputou a série A.</p>
   </div>
   <div class="poll">
