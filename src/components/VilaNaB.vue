@@ -75,13 +75,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <img src="../assets/sad-tiger.png" alt="illustration of cartoon tiger crying" class="tiger-img" />
+  <img src="@/assets/sad-tiger.png" alt="illustration of cartoon tiger crying" class="tiger-img" />
   <div>
     <h1 class="year">{{ props.currentYear - props.lastYearOnSeriesA }} anos</h1>
     <p class="description">se passaram desde que o Vila Nova disputou a série A.</p>
   </div>
   <div class="poll">
-    <img v-if="isLoading" src="../assets/loading.svg" alt="animated loading icon" class="loading" />
+    <img v-if="isLoading" src="@/assets/loading.svg" alt="animated loading icon" class="loading" />
     <template v-else>
       <div class="poll__title">Esse ano sobe?</div>
       <button v-if="!pollStore.isButtonClicked" class="poll__voting-btn" @click="() => vote(true)">

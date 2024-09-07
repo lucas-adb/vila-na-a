@@ -287,3 +287,10 @@ body {
 .animate-fill {
   transition: width 1s ease-in-out;
 }
+
+.vila-na-a-p {
+  color: var(--secondary);
+  text-align: center;
+  margin-block: 0;
+  font-size: 2rem;
+}
