@@ -2,8 +2,8 @@
 import VilaNaB from './components/VilaNaB.vue'
 import VilaNaA from './components/VilaNaA.vue'
 
-// const lastYearOnSeriesA = 1985
-const lastYearOnSeriesA = 2024
+const lastYearOnSeriesA = 1985
+// const lastYearOnSeriesA = 2025
 const currentYear = new Date().getFullYear()
 </script>
 
