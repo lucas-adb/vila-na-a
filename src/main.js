@@ -8,7 +8,8 @@ import App from './App.vue'
 
 const app = createApp(App, {
   currentYear: new Date().getFullYear(),
-  lastYearOnSeriesA: 1985
+  lastYearOnSeriesA: 2024
+  // lastYearOnSeriesA: 1985
 })
 
 app.use(createPinia())
