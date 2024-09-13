@@ -2,9 +2,16 @@
 import VilaNaB from './components/VilaNaB.vue'
 import VilaNaA from './components/VilaNaA.vue'
 
-// const lastYearOnSeriesA = 1985
-const lastYearOnSeriesA = 2024
-const currentYear = new Date().getFullYear()
+defineProps({
+  currentYear: {
+    type: Number,
+    required: true
+  },
+  lastYearOnSeriesA: {
+    type: Number,
+    required: true
+  }
+})
 </script>
 
 <template>

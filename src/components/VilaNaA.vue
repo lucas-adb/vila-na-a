@@ -1,15 +1,24 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import confettiRain from 'confetti-rain'
+// import confettiRain from 'confetti-rain'
 import audioUrl from '@/assets/bonde-do-tigrao.mp3'
 import { PhPlayCircle, PhPauseCircle } from '@phosphor-icons/vue'
 
 const audio = ref(null)
 const isPlaying = ref(true)
+// const canvasRef = ref(null)
 
 onMounted(() => {
-  const confetti = new confettiRain()
-  confetti.start()
+  // const canvas = canvasRef.value
+  // if (canvas) {
+  //   const context = canvas.getContext('2d')
+  //   if (context) {
+  //     const confetti = new confettiRain()
+  //     confetti.start()
+  //   }
+  // }
+  // const confetti = new confettiRain()
+  // confetti.start()
 
   audio.value = new Audio(audioUrl)
   audio.value.loop = true
@@ -30,6 +39,7 @@ function toggleAudio() {
 </script>
 
 <template>
+  <!-- <canvas ref="canvasRef" width="800" height="600"></canvas> -->
   <img
     src="@/assets/happy-tiger.png"
     alt="illustration of cartoon tiger crying"
