@@ -1,75 +1,50 @@
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
+import { onMounted, nextTick } from 'vue'
 import { supabase } from '../lib/supabaseClient'
 import { usePollStore } from '../stores/poll'
 
 const props = defineProps({
-  currentYear: {
-    type: Number,
-    required: true
-  },
-  lastYearOnSeriesA: {
-    type: Number,
-    required: true
-  }
+  currentYear: Number,
+  lastYearOnSeriesA: Number
 })
 
 const pollStore = usePollStore()
-const votes = ref({})
-const isLoading = ref(true)
 
-function animateFills() {
+const animateFills = () => {
   const fills = document.querySelectorAll('.poll__fill')
-
   fills.forEach((fill) => {
     fill.style.width = '0'
     fill.offsetWidth
   })
-
-  fills[0].style.width = `${((votes.value.total_true / votes.value.total_votes) * 100).toFixed(2)}%`
-  fills[1].style.width = `${((votes.value.total_false / votes.value.total_votes) * 100).toFixed(2)}%`
-
+  fills[0].style.width = `${((pollStore.votes.total_true / pollStore.votes.total_votes) * 100).toFixed(2)}%`
+  fills[1].style.width = `${((pollStore.votes.total_false / pollStore.votes.total_votes) * 100).toFixed(2)}%`
   fills.forEach((fill) => fill.classList.add('animate-fill'))
 }
 
-async function getPoll() {
+const getPoll = async () => {
   const { data, error } = await supabase.rpc('get_poll')
-
-  if (error) {
-    console.error('Error fetching poll:', error)
-    return
-  }
-
-  votes.value = data[0]
-  isLoading.value = false
-
+  if (error) return console.error('Error fetching poll:', error)
+  pollStore.setVotes(data[0])
+  pollStore.setLoading(false)
   await nextTick()
   animateFills()
 }
 
-async function vote(bool) {
-  const existingVote = localStorage.getItem('vila-poll')
-  if (existingVote) return
-
+const vote = async (bool) => {
+  if (localStorage.getItem('vila-poll')) return
   const { error } = await supabase.from('poll').insert([{ vote: bool }])
-
-  if (error) {
-    console.error('Error voting:', error)
-    return
-  }
-
+  if (error) return console.error('Error voting:', error)
   getPoll()
-
   pollStore.setButtonClicked(true)
   localStorage.setItem('vila-poll', true)
 }
 
-onMounted(async () => {
+onMounted(() => {
   if (localStorage.getItem('vila-poll')) {
     getPoll()
     pollStore.setButtonClicked(true)
   } else {
-    isLoading.value = false
+    pollStore.setLoading(false)
   }
 })
 </script>
@@ -81,7 +56,12 @@ onMounted(async () => {
     <p class="description">se passaram desde que o Vila Nova disputou a série A.</p>
   </div>
   <div class="poll">
-    <img v-if="isLoading" src="@/assets/loading.svg" alt="animated loading icon" class="loading" />
+    <img
+      v-if="pollStore.isLoading"
+      src="@/assets/loading.svg"
+      alt="animated loading icon"
+      class="loading"
+    />
     <template v-else>
       <div class="poll__title">Esse ano sobe?</div>
       <button v-if="!pollStore.isButtonClicked" class="poll__voting-btn" @click="() => vote(true)">
@@ -90,25 +70,22 @@ onMounted(async () => {
       <button v-if="!pollStore.isButtonClicked" class="poll__voting-btn" @click="() => vote(false)">
         Não
       </button>
-
       <div v-if="pollStore.isButtonClicked" class="poll__result">
         <p>Sim</p>
-        <p v-if="votes.value">
-          {{ ((votes.value.total_true / votes.value.total_votes) * 100).toFixed(2) }}%
+        <p v-if="pollStore.votes">
+          {{ ((pollStore.votes.total_true / pollStore.votes.total_votes) * 100).toFixed(2) }}%
         </p>
         <div class="poll__fill"></div>
       </div>
-
       <div v-if="pollStore.isButtonClicked" class="poll__result">
         <p>Não</p>
-        <p v-if="votes.value">
-          {{ ((votes.value.total_false / votes.value.total_votes) * 100).toFixed(2) }}%
+        <p v-if="pollStore.votes">
+          {{ ((pollStore.votes.total_false / pollStore.votes.total_votes) * 100).toFixed(2) }}%
         </p>
         <div class="poll__fill"></div>
       </div>
-
-      <p v-if="pollStore.isButtonClicked && votes.value" class="poll__total-votes">
-        {{ votes.value.total_votes }} votos
+      <p v-if="pollStore.isButtonClicked && pollStore.votes" class="poll__total-votes">
+        {{ pollStore.votes.total_votes }} votos
       </p>
     </template>
   </div>
