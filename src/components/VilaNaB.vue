@@ -64,13 +64,11 @@ onMounted(() => {
     />
     <template v-else>
       <div class="poll__title">Esse ano sobe?</div>
-      <button v-if="!pollStore.isButtonClicked" class="poll__voting-btn" @click="() => vote(true)">
-        Sim
-      </button>
-      <button v-if="!pollStore.isButtonClicked" class="poll__voting-btn" @click="() => vote(false)">
-        Não
-      </button>
-      <div v-if="pollStore.isButtonClicked" class="poll__result">
+      <template v-if="!pollStore.isButtonClicked">
+        <button class="poll__voting-btn" @click="() => vote(true)">Sim</button>
+        <button class="poll__voting-btn" @click="() => vote(false)">Não</button>
+      </template>
+      <div v-else class="poll__result">
         <p>Sim</p>
         <p v-if="pollStore.votes">
           {{ ((pollStore.votes.total_true / pollStore.votes.total_votes) * 100).toFixed(2) }}%
@@ -84,7 +82,7 @@ onMounted(() => {
         </p>
         <div class="poll__fill"></div>
       </div>
-      <p v-if="pollStore.isButtonClicked && pollStore.votes" class="poll__total-votes">
+      <p v-if="pollStore.votes" class="poll__total-votes">
         {{ pollStore.votes.total_votes }} votos
       </p>
     </template>
