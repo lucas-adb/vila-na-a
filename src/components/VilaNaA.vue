@@ -47,6 +47,8 @@ function toggleAudio() {
     <h1 class="year">Estamos na série A!</h1>
     <p class="vila-na-a-p">Viiila 🎉!</p>
     <button
+      aria-label="Toggle audio"
+      id="toggle-audio-btn"
       @click="toggleAudio"
       :class="isPlaying ? 'toggle-audio-btn animate-toggle' : 'toggle-audio-btn'"
     >
@@ -54,5 +56,7 @@ function toggleAudio() {
       <PhPlayCircle v-else :size="64" weight="fill" />
     </button>
   </div>
-  <a href="https://lucasalves.dev/" class="portfolio" target="_blank">lucasalves.dev</a>
+  <a id="portfolio-link" href="https://lucasalves.dev/" class="portfolio" target="_blank"
+    >lucasalves.dev</a
+  >
 </template>
