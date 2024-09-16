@@ -12,6 +12,9 @@ const pollStore = usePollStore()
 
 const animateFills = () => {
   const fills = document.querySelectorAll('.poll__fill')
+
+  if (fills.length === 0) return
+
   fills.forEach((fill) => {
     fill.style.width = '0'
     fill.offsetWidth
@@ -82,7 +85,7 @@ onMounted(() => {
         </p>
         <div class="poll__fill"></div>
       </div>
-      <p v-if="pollStore.votes" class="poll__total-votes">
+      <p v-if="pollStore.votes.total_votes" class="poll__total-votes">
         {{ pollStore.votes.total_votes }} votos
       </p>
     </template>
