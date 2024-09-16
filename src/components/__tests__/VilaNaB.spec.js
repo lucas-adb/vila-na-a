@@ -2,23 +2,27 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import VilaNaB from '../VilaNaB.vue'
 import { createTestingPinia } from '@pinia/testing'
-// import { supabase } from '@/lib/supabaseClient'
-
-// vi.mock('../lib/supabaseClient', () => ({
-//   supabase: {
-//     rpc: vi.fn(),
-//     from: vi.fn(() => ({
-//       insert: vi.fn()
-//     }))
-//   }
-// }))
+import { supabase } from '@/lib/supabaseClient'
 
 describe('VilaNaB', () => {
   beforeEach(() => {
     localStorage.clear()
+    vi.resetAllMocks()
   })
 
-  it('deve exibir os botões para votar,caso não tiver votado', () => {
+  it('deve exibir os botões para votar, caso não tiver votado', async () => {
+    // Mock da função supabase.rpc
+    vi.spyOn(supabase, 'rpc').mockResolvedValue({
+      data: [{ total_true: 6, total_false: 4, total_votes: 10 }],
+      error: null
+    })
+
+    // Mock da função supabase.from().insert()
+    const insertMock = vi.fn().mockResolvedValue({ error: null })
+    vi.spyOn(supabase, 'from').mockReturnValue({
+      insert: insertMock
+    })
+
     const wrapper = mount(VilaNaB, {
       global: {
         plugins: [
@@ -35,14 +39,30 @@ describe('VilaNaB', () => {
         ]
       }
     })
+
     const votingButtons = wrapper.findAll('.poll__voting-btn')
     expect(votingButtons).toHaveLength(2)
     votingButtons.forEach((button) => {
       expect(button.element.tagName).toBe('BUTTON')
     })
+
+    // Simula o clique no botão "Sim"
+    await votingButtons[0].trigger('click')
+
+    // Verifica se a função supabase.from().insert() foi chamada
+    expect(insertMock).toHaveBeenCalledWith([{ vote: true }])
+
+    // Verifica se a função supabase.rpc foi chamada
+    expect(supabase.rpc).toHaveBeenCalledWith('get_poll')
   })
 
-  it('deve exibir o resultado da enquete, caso tiver votado', () => {
+  it('deve exibir o resultado da enquete, caso tiver votado', async () => {
+    // Mock da função supabase.rpc
+    vi.spyOn(supabase, 'rpc').mockResolvedValue({
+      data: [{ total_true: 6, total_false: 4, total_votes: 10 }],
+      error: null
+    })
+
     const wrapper = mount(VilaNaB, {
       global: {
         plugins: [
