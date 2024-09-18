@@ -287,3 +287,56 @@ body {
 .animate-fill {
   transition: width 1s ease-in-out;
 }
+
+.vila-na-a-p {
+  color: var(--secondary);
+  text-align: center;
+  margin-block: 0;
+  font-size: 2rem;
+}
+
+.toggle-audio-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--secondary);
+  cursor: pointer;
+  margin: 1rem auto;
+  display: block;
+}
+
+.animate-toggle {
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+.toggle-audio-btn:hover {
+  animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
